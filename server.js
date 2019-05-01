@@ -1,4 +1,5 @@
 /* Setup */
+require ("dotenv/config");
 const express       = require('express'),
       app           = express(),
       port          = process.env.PORT || 3030,
@@ -12,11 +13,12 @@ const express       = require('express'),
       bodyParser    = require('body-parser'),
       session       = require('express-session'),
       
-      configDB      = require('./config/database');
+      configDB      = require('./config/database'),
+      auth          = require('./config/auth');
 
 // Connect to our mongoose db
 mongoose.Promise = global.Promise;
-mongoose.connect(configDB.url); 
+mongoose.connect(configDB.url, {useNewUrlParser: true}); 
 
 require('./config/passport')(passport);
 
@@ -37,9 +39,10 @@ const user = new ConnectRoles({
 
 
 // set up our express app
-app.use(morgan('dev'));   // log requests to the console
-app.use(cookieParser() ); // We'll use cookies for auth. Eventually, change to JWT
-app.use(bodyParser());    // get HTML form info.
+app.use(morgan('dev'));              // log requests to the console
+app.use(cookieParser() );            // We'll use cookies for auth. Eventually, change to JWT
+app.use(bodyParser());               // get HTML form info.
+app.use(express.static('public') );  // Add the option for static files (like .js or images)
 
 app.set('view engine', 'ejs');
 
@@ -48,6 +51,7 @@ app.use(session({ secret: 'whosthe13igbad13unny' })); // session secret
 app.use(passport.initialize() );
 app.use(passport.session() ); // persistent login sessions
 app.use(user.middleware() );
+// app.use("/auth", auth);
 
 app.use(flash() );  // use connect-flash for flash messages stored in session 
 

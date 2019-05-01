@@ -24,7 +24,15 @@ const mongoose = require('mongoose'),
           token         : String,
           name          : String,
           email         : String,
-        }
+        },
+        tokens: [
+          {
+            type: String,
+            token: String
+          }
+        ]
+      }, {
+        timestamps      : true
       });
 
 /* Methods */

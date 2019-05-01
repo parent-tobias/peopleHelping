@@ -6,25 +6,27 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <style>
-        body        { padding-top:80px; }
+        body { padding-top:80px; }
+      header { display: flex;}
     </style>
 </head>
 <body>
-<div class="container">
+<main class="container">
 
-    <div class="jumbotron text-center">
-        <h1><span class="fa fa-lock"></span> Node Authentication</h1>
+    <header>
+        <h1>People Helping :: Helping People</h1>
 
 <% if(typeof user == 'object' && user) { %>
-      <h2>You are logged in! Welcome back <%= user.local.email %></h2>
       <a href='/logout' class='btn btn-default'><span class='fa fa-sign-out'></span> Logout</a>
 <% } else { %>
         <p>Login or Register with:</p>
         <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
         <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
  <% } %>
-    </div>
-
-</div>
+    </header>
+    <section class='category-container'></section>
+</main>
+  <script src='/js/models/category.js'></script>
+  <script src='/js/categories.js'></script>
 </body>
 </html>
